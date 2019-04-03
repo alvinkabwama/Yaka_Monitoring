@@ -62,3 +62,5 @@ coordinates = (latfloat, longfloat)
 mapfig = gmaps.figure(center=coordinates, zoom_level=12)
 embed_minimal_html('export.html', views=[mapfig])
 
+mapfig.savefig('Maps.png', dpi=300)
+
