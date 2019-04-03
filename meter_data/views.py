@@ -4,27 +4,15 @@ from .models import Data
 from geopy.geocoders import Nominatim
 import gmaps
 
-
-
-
 def datashow(request):
     if(request.method == 'GET'):
         serialnumber = '0645'
         devicedata = Data.objects.filter(device_serial = serialnumber).order_by("-pk")
-        
-        
         context = {'devicedata': devicedata}
         return render(request, 'tableview.html', context)
-        
-        
-        
-    
-    
-    
-    
+           
 def datareceive(request):
     if(request.method == 'GET'):
-        
         device_serial = request.GET.get("device_serial")
         vb_meter = request.GET.get("vb_meter")
         va_meter = request.GET.get("va_meter")
@@ -37,7 +25,6 @@ def datareceive(request):
         longitude = request.GET.get("longitude")   
         owner = request.GET.get("owner")
         
-        
         print(device_serial)
         print(vb_meter)
         print(va_meter)
@@ -49,18 +36,14 @@ def datareceive(request):
         print(latitude)
         print(longitude)   
         print(owner)
-        
-        
-        #return HttpResponse("<h3> Co2 is {a}and serial is {b} and pm2.5 is {c} </h3>".format(a=c02, b=serialnumber, c=pm25))
-        
-        if(device_serial and vb_meter and va_meter and vin_house and cb_meter and ca_meter and cin_house and energy and latitude and longitude and owner):
-            
-            
+                
+        if(device_serial and vb_meter and va_meter and
+            vin_house and cb_meter and ca_meter and cin_house and 
+                energy and latitude and longitude and owner):
             latfloat = float(latitude)
             longfloat = float(longitude)
-            
+
             if((latfloat == 0) and (longfloat == 0)):
-            
                 location_address = 'Null'  
             else:
                 latlng = latitude + ',' + longitude
@@ -68,31 +51,34 @@ def datareceive(request):
                 location = geolocator.reverse(latlng)
                 location_address = location.address
                  
-            Data(device_serial = device_serial, vb_meter = vb_meter,va_meter = va_meter, vin_house = vin_house, cb_meter = cb_meter,  ca_meter = ca_meter,
-            cin_house = cin_house, energy = energy, latitude = latitude, longitude = longitude, owner = owner, location = location_address).save()
-                        
+            Data(
+                device_serial = device_serial, 
+                vb_meter = vb_meter,
+                va_meter = va_meter, 
+                vin_house = vin_house, 
+                cb_meter = cb_meter,  
+                ca_meter = ca_meter,
+                cin_house = cin_house, 
+                energy = energy, 
+                latitude = latitude, 
+                longitude = longitude, 
+                owner = owner, 
+                location = location_address
+            ).save()
+                  
             return HttpResponse("<br><h3> Pass </h3>")
-    
         else:
             return HttpResponse("<br><h3> Data Missing </h3>")
         
-
-
-
 def maps_view(request,pk):
-    
     device_data = Data.objects.get(pk = pk)
-    
     latfloat = float(device_data.latitude)
     longfloat = float(device_data.longitude)
     
     gmaps.configure(api_key='AIzaSyAH6Tx3JJQvAkt4Tbw3tBWiSO8bLFrN41w')
     new_york_coordinates = (latfloat, longfloat)
-    
     gmaps.figure(center=new_york_coordinates, zoom_level=12)
-    '''
 
-    #context = {'devicedata': devicedata}
     return render(request, 'mapsview.html')
         
 def datasend(request):
