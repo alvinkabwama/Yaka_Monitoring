@@ -10,7 +10,7 @@ import gmaps
 def datashow(request):
     if(request.method == 'GET'):
         serialnumber = '0645'
-        devicedata = Data.objects.filter(device_serial = serialnumber).order_by("-pk")
+        devicedata = Data.objects.filter(client.device_serial = serialnumber).order_by("-pk")
         
         
         context = {'devicedata': devicedata}
@@ -18,10 +18,6 @@ def datashow(request):
         
         
         
-    
-    
-    
-    
 def datareceive(request):
     if(request.method == 'GET'):
         
