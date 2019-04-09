@@ -64,7 +64,7 @@ def datareceive(request):
                 
         if(device_serial and vb_meter and va_meter and
             vin_house and cb_meter and ca_meter and cin_house and 
-                energy and latitude and longitude and owner):
+                energy and latitude and longitude):
             
             latfloat = float(latitude)
             longfloat = float(longitude)
@@ -91,7 +91,6 @@ def datareceive(request):
                 energy = energy, 
                 latitude = latitude, 
                 longitude = longitude, 
-                owner = owner, 
                 location = location_address
             ).save()
                   
