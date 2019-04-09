@@ -19,7 +19,8 @@ from . import views
 
 urlpatterns = [
     path('datareceive', views.datareceive, name='datareceive'),
-    path('', views.datashow, name='data_show'),
+    path('', views.clientshow, name='clientshow'),
+    path('datashow/<int:pk>', views.datashow, name='datashow'),
     path('maps_view/<int:pk>', views.maps_view, name='maps_view'),
 ]
 # -*- coding: utf-8 -*-

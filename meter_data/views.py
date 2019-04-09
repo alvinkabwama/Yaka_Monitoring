@@ -1,20 +1,43 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Data
+from .models import Data, Client
 from geopy.geocoders import Nominatim
 import gmaps
 
-def datashow(request):
+
+
+
+def clientshow(request):
     if(request.method == 'GET'):
-        serialnumber = '0645'
-        devicedata = Data.objects.filter(client.device_serial = serialnumber).order_by("-pk")
+        
+        try:
+            clientsdata = Client.objects.all().order_by("-pk")  
+            context = {'clientsdata': clientsdata}
+            return render(request, 'clientsview.html', context)
+        except:   
+            return HttpResponse("<br><h3> There is no client data in the data base. Register some clients and try again </h3>") 
+
+        
+            
+def datashow(request,pk):
+    if(request.method == 'GET'):
+        
+        clientsdata = Client.objects.get(pk = pk)  
+        
+        clientdataobject = Data.objects.filter(client = clientsdata).order_by("-pk")
+        
+        energy_value = Data.objects.filter(client = clientsdata).order_by("-pk")[0].energy
         
         
-        context = {'devicedata': devicedata}
+        
+        context = {'clientdataobject': clientdataobject, 'clientsdata': clientsdata, 'energy_value': energy_value}
+        
         return render(request, 'tableview.html', context)
-        
+
+
     
 def datareceive(request):
+       
     if(request.method == 'GET'):
         device_serial = request.GET.get("device_serial")
         vb_meter = request.GET.get("vb_meter")
@@ -26,7 +49,7 @@ def datareceive(request):
         energy = request.GET.get("energy")
         latitude = request.GET.get("latitude")
         longitude = request.GET.get("longitude")   
-        owner = request.GET.get("owner")
+        
         
         print(device_serial)
         print(vb_meter)
@@ -38,11 +61,11 @@ def datareceive(request):
         print(energy)
         print(latitude)
         print(longitude)   
-        print(owner)
                 
         if(device_serial and vb_meter and va_meter and
             vin_house and cb_meter and ca_meter and cin_house and 
                 energy and latitude and longitude and owner):
+            
             latfloat = float(latitude)
             longfloat = float(longitude)
 
@@ -54,8 +77,11 @@ def datareceive(request):
                 location = geolocator.reverse(latlng)
                 location_address = location.address
                  
+                
+            client_object = Client.objects.get(device_serial = device_serial)    
+                
             Data(
-                device_serial = device_serial, 
+                client = client_object, 
                 vb_meter = vb_meter,
                 va_meter = va_meter, 
                 vin_house = vin_house, 

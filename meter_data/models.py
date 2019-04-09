@@ -26,8 +26,7 @@ class Data(models.Model):
     latitude = models.CharField(max_length = 255)
     longitude = models.CharField(max_length = 255)  
     location = models.CharField(max_length = 255, default = 'Kampala')
-    owner = models.CharField(max_length = 255)
-    watts = models.CharField(max_length = 255) 
+    energy = models.CharField(max_length = 255) 
 
 
 
