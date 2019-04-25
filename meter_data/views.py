@@ -21,16 +21,16 @@ def clientshow(request):
             
 def datashow(request,pk):
     if(request.method == 'GET'):
+        energy_value = 0
+        client = Client.objects.get(pk = pk)  
+        clientdataobject = Data.objects.filter(client = client).order_by("-pk")
+        client_data = Data.objects.filter(client=client).order_by("-pk")
         
-        clientsdata = Client.objects.get(pk = pk)  
-        
-        clientdataobject = Data.objects.filter(client = clientsdata).order_by("-pk")
-        
-        energy_value = Data.objects.filter(client = clientsdata).order_by("-pk")[0].energy
-        
-        
-        
-        context = {'clientdataobject': clientdataobject, 'clientsdata': clientsdata, 'energy_value': energy_value}
+        if client_data:
+            energy_value = Data.objects.filter(
+                client = client).order_by("-pk")[0].energy
+
+        context = {'clientdataobject': clientdataobject, 'client': client, 'energy_value': energy_value}
         
         return render(request, 'tableview.html', context)
 
