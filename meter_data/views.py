@@ -32,8 +32,7 @@ def datashow(request,pk):
 
         context = {'clientdataobject': clientdataobject, 'client': client, 'energy_value': energy_value}
         
-        print(clientdataobject[0].longitude)
-        print(clientdataobject[0].latitude)
+        
         
         return render(request, 'tableview.html', context)
 
