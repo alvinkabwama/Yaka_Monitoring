@@ -53,6 +53,7 @@
                     <th>C<sub>after</sub><br>Meter(A)</th>
                     <th>C<sub>in</sub><br>House(A) </th>
                     <th>Location</th>
+                    <th>Coordinates</th>
                 </tr>
             </thead>
                 <tbody>
@@ -65,12 +66,14 @@
                     <td>{{data.cb_meter}}</td>
                     <td>{{data.ca_meter}}</td>
                     <td>{{data.cin_house}}</td>
+                    <td>{{data.location}}</td>
                     
                     {% if data.location == 'Null' %}
-                    <td>{{data.location}}</td>
+                    <td>{{data.latitude}}, {{data.longitude}}</td>
                     {% else %}
-                    <td><a href="{% url 'maps_view' data.pk %}" target = "_blank">{{data.location}}</a></td>
+                    <td><a href="https://www.google.com?q={{data.latitude}}, {{data.longitude}}" target = "_blank">{{data.latitude}}, {{data.longitude}}</a></td>
                     {% endif %}
+                   
                 </tr>              
                 {% endfor %}
                         

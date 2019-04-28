@@ -32,6 +32,9 @@ def datashow(request,pk):
 
         context = {'clientdataobject': clientdataobject, 'client': client, 'energy_value': energy_value}
         
+        print(clientdataobject[0].longitude)
+        print(clientdataobject[0].latitude)
+        
         return render(request, 'tableview.html', context)
 
 
@@ -68,6 +71,9 @@ def datareceive(request):
             
             latfloat = float(latitude)
             longfloat = float(longitude)
+            
+            print('LATITUDE:', latfloat)
+            print('LONGITUDE:', longfloat)
 
             if((latfloat == 0) and (longfloat == 0)):
                 location_address = 'Null'  
@@ -102,6 +108,8 @@ def maps_view(request,pk):
     device_data = Data.objects.get(pk = pk)
     latfloat = float(device_data.latitude)
     longfloat = float(device_data.longitude)
+    
+    
     
     gmaps.configure(api_key='AIzaSyAH6Tx3JJQvAkt4Tbw3tBWiSO8bLFrN41w')
     new_york_coordinates = (latfloat, longfloat)

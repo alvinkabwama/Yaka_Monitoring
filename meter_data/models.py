@@ -24,7 +24,7 @@ class Data(models.Model):
     energy = models.CharField(max_length = 255)
     received_at = models.DateTimeField(auto_now_add =True)  
     latitude = models.CharField(max_length = 255)
-    longitude = models.CharField(max_length = 255)  
+    longitude = models.CharField(max_length = 255)
     location = models.CharField(max_length = 255, default = 'Kampala')
     energy = models.CharField(max_length = 255) 
 

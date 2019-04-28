@@ -10,7 +10,7 @@ latlng = latitude + ',' + longitude
 # Enter your api key here 
 api_key = "AIzaSyAH6Tx3JJQvAkt4Tbw3tBWiSO8bLFrN41w" 
 
-AIzaSyASmoLdB8WBkLBy0Wob9yAtuSqlPEq5D28
+#AIzaSyASmoLdB8WBkLBy0Wob9yAtuSqlPEq5D28
 
   
 # url variable store url 
